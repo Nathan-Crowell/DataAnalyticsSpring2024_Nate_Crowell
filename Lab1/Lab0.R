@@ -1,4 +1,4 @@
-# Lab 0/1 for Data Analytics
+# Lab 0 for Data Analytics
 # Nate Crowell
 myData = read.csv(file.choose(),header=T)
 
