@@ -110,5 +110,11 @@ hist(ED, seq(30., 95., 1.0), prob=TRUE)
 lines(density(ED,na.rm=TRUE,bw="SJ"))
 lines(density(ED,na.rm=TRUE,bw=1.0))
 
-# Filter on EPI_regions
+# Filter on (EPI_regions == "Europe")
 View(data2010)
+dataEPIEurope <- data2010$EPI[!(data2010$EPI_regions!="Europe")]
+EPIEurope <- dataEPIEurope[!is.na(dataEPIEurope)]
+hist(EPIEurope)
+hist(EPIEurope, seq(30., 95., 1.0), prob=TRUE)
+lines(density(EPIEurope,na.rm=TRUE,bw="SJ"))
+lines(density(EPIEurope,na.rm=TRUE,bw=1.0))
