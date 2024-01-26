@@ -1,7 +1,6 @@
 # Lab 1 for Data Analytics
 # Nate Crowell
 data2010 = read.csv(file.choose(),header=T)
-data2016 = read.csv(file.choose(),header=T)
 
 names(data2010) <- data2010[1,]
 data2010 = data2010[-1,]
@@ -61,6 +60,7 @@ hist(ELand)
 hist(ELand, seq(30., 95., 1.0), prob=TRUE)
 lines(density(ELand,na.rm=TRUE,bw="SJ"))
 lines(density(ELand,na.rm=TRUE,bw=1.0))
+rug(ELand)
 
 
 # filter AIR_H on high population density
@@ -72,6 +72,7 @@ hist(ahHPD)
 hist(ahHPD, seq(0.,100.,1.0),prob=T)
 lines(density(ahHPD,na.rm=TRUE,bw="SJ"))
 lines(density(ahHPD,na.rm=TRUE,bw=1.0))
+rug(ahHPD)
 
 # filtering AIR_E on HPD
 aireHPD <- EAir2010[!data2010$High_Population_Density]
@@ -80,6 +81,7 @@ hist(aeHPD)
 hist(aeHPD, seq(20.,100.,1.0),prob=T)
 lines(density(aeHPD,na.rm=TRUE,bw="SJ"))
 lines(density(aeHPD,na.rm=TRUE,bw=1.0))
+rug(aeHPD)
 
 
 # now compare filtered values
@@ -100,6 +102,7 @@ hist(ENSW)
 hist(ENSW, seq(30., 95., 1.0), prob=TRUE)
 lines(density(ENSW,na.rm=TRUE,bw="SJ"))
 lines(density(ENSW,na.rm=TRUE,bw=1.0))
+rug(ENSW)
 
 # Filter on Desert
 data2010$Desert = as.numeric(as.character(data2010$Desert))
@@ -109,6 +112,7 @@ hist(ED)
 hist(ED, seq(30., 95., 1.0), prob=TRUE)
 lines(density(ED,na.rm=TRUE,bw="SJ"))
 lines(density(ED,na.rm=TRUE,bw=1.0))
+rug(ED)
 
 # Filter on (EPI_regions == "Europe")
 View(data2010)
@@ -118,3 +122,41 @@ hist(EPIEurope)
 hist(EPIEurope, seq(30., 95., 1.0), prob=TRUE)
 lines(density(EPIEurope,na.rm=TRUE,bw="SJ"))
 lines(density(EPIEurope,na.rm=TRUE,bw=1.0))
+rug(EPIEurope)
+
+
+# GPW3_GRUMP REPEAT
+gpwData = read.csv(file.choose(),header=T)
+View(gpwData)
+
+gpwData$Sum.All.Urban.Extents..sq.km. = as.numeric(as.character(gpwData$Sum.All.Urban.Extents..sq.km.))
+gpwSAUEsk = gpwData$Sum.All.Urban.Extents..sq.km.
+
+summary(gpwSAUEsk)
+fivenum(gpwSAUEsk)
+stem(gpwSAUEsk)
+hist(gpwSAUEsk)
+hist(gpwSAUEsk, seq(0,1000,50),prob=T)
+lines(density(gpwSAUEsk,na.rm=TRUE,bw="SJ"))
+lines(density(gpwSAUEsk,na.rm=TRUE,bw=25))
+rug(gpwSAUEsk)
+
+# Exercise 1: fitting a distribution beyond histograms
+plot(ecdf(gpwSAUEsk), do.points=FALSE, verticals=TRUE)
+
+par(pty="s")
+qqnorm(gpwSAUEsk)
+qqline(gpwSAUEsk)
+
+y<-seq(0,1000,25)
+qqplot(qt(ppoints(250), df= 5), y, xlab= "Q-Q plot for t dsn")
+qqline(y)
+
+# Filtering GPW on Countries in Africa
+gpwSAUEskNotAfrica <- gpwSAUEsk[!(gpwData$ContinentName!="Africa")]
+saueAfrica <- gpwSAUEskNotAfrica[!is.na(gpwSAUEskNotAfrica)]
+
+hist(saueAfrica, seq(0,1000,25),prob=T)
+lines(density(saueAfrica,na.rm=TRUE,bw="SJ"))
+lines(density(saueAfrica,na.rm=TRUE,bw=25))
+rug(saueAfrica)
