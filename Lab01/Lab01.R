@@ -160,3 +160,48 @@ hist(saueAfrica, seq(0,1000,25),prob=T)
 lines(density(saueAfrica,na.rm=TRUE,bw="SJ"))
 lines(density(saueAfrica,na.rm=TRUE,bw=25))
 rug(saueAfrica)
+
+
+# Working with EPI again
+plot(ecdf(data2010$EPI), do.points=FALSE, verticals=TRUE) 
+
+help("qqnorm")
+par(pty="s")
+qqnorm(data2010$EPI)
+qqline(data2010$EPI)
+
+x<-seq(30,95,1)
+qqplot(qt(ppoints(250), df= 5), x, xlab= "Q-Q plot for t dsn")
+qqline(x)
+
+plot(ecdf(data2010$EPI),do.points=FALSE,verticals= TRUE)
+plot(ecdf(data2010$EPI),do.points=TRUE,verticals= TRUE) # points are visible on the plot.
+par(pty="s")
+help("qqnorm") # read the RStudiodocumentation for qqnorm
+help("qqplot") # read the RStudiodocumentation for qqplot
+qqnorm(data2010$EPI)
+qqline(data2010$EPI) # adding the line on the Q-Q plot
+x <-seq(30,95,1)
+x
+x2 <-seq(30,95,2)
+x2
+x2 <-seq(30,96,2)
+x2
+qqplot(qt(ppoints(250),df=5),x, xlab= "Q-Q plot")
+qqline(x)
+
+
+# R Cook Book
+
+# Calling grid library
+library(grid)
+# Creating a rectangle
+grid.rect(height=0.25,width=0.25)
+# A rounded rectangle
+grid.roundrect(height=0.2,width=0.2)
+# A circle
+grid.circle(r=0.1)
+# Inserting text within the shape
+grid.text("R Graphics")
+# Drawing a polygon
+grid.polygon()
