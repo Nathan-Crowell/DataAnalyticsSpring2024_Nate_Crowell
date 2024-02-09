@@ -23,6 +23,7 @@ dim(iris_train)
 dectionTreeModel = rpart(Species~., iris_train, method="class")
 dectionTreeModel
 
+# now generate plot for the decision tree
 rpart.plot(dectionTreeModel)
 
 
