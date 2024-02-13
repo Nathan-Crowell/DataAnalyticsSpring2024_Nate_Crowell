@@ -7,9 +7,11 @@ library(rpart.plot)
 # abalone dataset from UCI repository 
 # reading the dataset from UCI repository URL 
 abalone <-read.csv(url("https://archive.ics.uci.edu/ml/machine-learning-databases/abalone/abalone.data"), header = FALSE, sep= ",") 
+head(abalone)
 # Column names 
 colnames(abalone) <-c("sex", "length", 'diameter', 'height', 'whole_weight', 'shucked_wieght', 'viscera_wieght', 'shell_weight', 'rings' ) 
 # summary on abalone 
+head(abalone)
 summary(abalone) 
 # structure of the abalone data 
 str(abalone) 
@@ -25,14 +27,37 @@ summary(abalone$rings)
 abalone$rings<-as.numeric(abalone$rings)
 abalone$rings<-cut(abalone$rings, br=c(-1,8,11,35), labels = c("young", 'adult', 'old'))
 abalone$rings<-as.factor(abalone$rings)
-summary(abalone$rings) 
+summary(abalone$rings)
+
 # remove the "sex" variable in abalone, because KNN requires all numeric variables for prediction 
 # z <-abalone 
 aba <-abalone 
 aba$sex<-NULL
 
+# normalize the data using min max normalization. # scale()
+normalize = function(x) {
+  return ((x-min(x))/(max(x)-min(x)))
+}
 
+aba[1:7] = as.data.frame(lapply(aba[1:7], normalize))
+summary(aba$shucked_wieght)
+# this prevents columns with large numbers to dominate other columns
+# all columns are now between 0-1
 
-
+# We'll now split the data into training and testing sets.
+ind = sample(2, nrow(aba), replace=TRUE, prob = c(0.7,0.3))
+KNNtrain = aba[ind==1,]
+KNNtest = aba[ind==2,]
+sqrt(2918)
+# make k equal to the square root of 2918, the number of observations in the training set. 
+# sqrt(2918) ~= 54.01852  round it to 55 and use k = 55 
+# We usually take an Odd number for k value, 
+# knnmodel 
+# knn() is in the "class" library. Make sure to install it first on your RStudio. 
+library(class) 
+help("knn") # Read the knndocumentation on RStudio. 
+KNNpred<-knn(train = KNNtrain[1:7], test = KNNtest[1:7], cl = KNNtrain$rings, k = 55) 
+KNNpred
+table(KNNpred)
 
 
