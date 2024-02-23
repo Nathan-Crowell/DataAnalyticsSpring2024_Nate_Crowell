@@ -15,25 +15,32 @@ SALE.PRICE<-sub("\\$","",SALE.PRICE)
 SALE.PRICE<-as.numeric(gsub(",","", SALE.PRICE)) 
 GROSS.SQUARE.FEET<-as.numeric(gsub(",","", GROSS.SQUARE.FEET)) 
 LAND.SQUARE.FEET<-as.numeric(gsub(",","", LAND.SQUARE.FEET)) 
+
+bronx1<-bronx1[which(bronx1$GROSS.SQUARE.FEET>0 | bronx1$LAND.SQUARE.FEET>0 | bronx1$SALE.PRICE>0),]
+
+print(length(GROSS.SQUARE.FEET))
+print(length(SALE.PRICE))
+
 plot(log(GROSS.SQUARE.FEET), log(SALE.PRICE))
 
-# we need to make all the NAs 0
-summary(SALE.PRICE)
-count(GROSS.SQUARE.FEET, na.rm=F)
+any(is.na(log(SALE.PRICE)))
+any(is.infinite(log(SALE.PRICE)))
 
-log.GSF = log(GROSS.SQUARE.FEET)
-log.SP = log(SALE.PRICE)
+any(is.na(log(GROSS.SQUARE.FEET)))
+any(is.infinite(log(GROSS.SQUARE.FEET)))
 
-log.GSF[is.na(log.GSF)] = 0
-log.GSF[is.na(log.GSF)] = 0
+# we need to filter out the infinite values of log(SALE.PRICE)
+bronx1 = bronx1[SALE.PRICE>0,]
 
-
-m1 <- lm(log.SP~log.GSF)
+m1 <- lm(log(SALE.PRICE)~log(GROSS.SQUARE.FEET))
 summary(m1)
 abline(m1,col="red",lwd=2)
 plot(resid(m1))
 
 # Model 2
+
+SALE.PRICE = SALE.PRICE[!SALE.PRICE==0]
+SALE.PRICE = SALE.PRICE[!SALE.PRICE==0]
 
 m2<-lm(log(bronx1$SALE.PRICE)~log(bronx1$GROSS.SQUARE.FEET)+log(bronx1$LAND.SQUARE.FEET)+factor(bronx1$NEIGHBORHOOD))
 summary(m2)
