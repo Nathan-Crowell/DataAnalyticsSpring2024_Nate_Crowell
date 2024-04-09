@@ -2,6 +2,8 @@ library(MASS)
 data(mammals)
 
 mammals.glm <- glm(log(brain) ~ log(body), data = mammals)
+
+library(boot)
 (cv.err <- cv.glm(mammals, mammals.glm)$delta)
 
 (cv.err.6 <- cv.glm(mammals, mammals.glm, K = 6)$delta)
