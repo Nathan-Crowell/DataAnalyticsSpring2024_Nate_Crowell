@@ -34,3 +34,4 @@ cvNames(cvFitsLts) <- c("improved", "initial")
 fits(cvFitsLts)
 fits(cvFitsLts) <- 1:2
 cvFitsLts
+
