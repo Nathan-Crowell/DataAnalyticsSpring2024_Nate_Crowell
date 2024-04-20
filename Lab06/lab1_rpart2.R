@@ -15,6 +15,6 @@ pfitM<- prune(fitM, cp=0.01160389) # from cptable??? adjust this to see the effe
 # plot the pruned tree
 plot(pfitM, uniform=TRUE, main="Pruned Regression Tree for Mileage")
 text(pfitM, use.n=TRUE, all=TRUE, cex=.8)
-post(pfitM, file = "ptree2.ps", title = "Pruned Regression Tree for Mileage”)
+post(pfitM, file = "ptree2.ps", title = "Pruned Regression Tree for Mileage")
 
 
